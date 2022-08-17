@@ -1,12 +1,9 @@
 import Component from "../components/component.js";
 import Button from "../components/button.js";
+import Book from "../models/book.js";
 
 export default class BookCard extends Component {
-  onClick = (e) => null;
-  title = "";
-  author = "";
-  read = false;
-  pages = 0;
+  book = new Book();
 
   titleElement;
   authorElement;
@@ -14,7 +11,7 @@ export default class BookCard extends Component {
   readButton;
   removeButton;
 
-  constructor(title, author, pages, read) {
+  constructor(book) {
     super (
       /*css*/`
         .container {
@@ -67,6 +64,29 @@ export default class BookCard extends Component {
       `
     );
 
+    this.book = new Proxy(book, {
+      set: (target, prop, value) => {
+        target[prop] = value;
+
+        switch(prop) {
+          case 'title':
+            this.refreshTitle();
+            break;
+          case 'author':
+            this.refreshAuthor();
+            break;
+          case 'pages':
+            this.refreshPages();
+            break;
+          case 'read':
+            this.refreshRead();
+            break;
+        }
+
+        return true;
+      }
+    });
+
     this.titleElement = this.shadowRoot.querySelector(".title");
     this.authorElement = this.shadowRoot.querySelector(".author");
     this.pagesElement = this.shadowRoot.querySelector(".pages");
@@ -74,11 +94,14 @@ export default class BookCard extends Component {
     this.readButton = new Button();
     this.readButton.setAttribute('id', 'read-button')
     this.readButton.onClick = () => {
-      this.setRead(!this.read);
+      this.book.read = !this.book.read;
     }
 
     this.removeButton = new Button();
     this.removeButton.innerHTML = `Remove`;
+    this.removeButton.onClick = () => {
+      this.dispatchEvent(new Event('removed'));
+    }
 
     this.shadowRoot
       .querySelector('.container')
@@ -86,35 +109,24 @@ export default class BookCard extends Component {
         this.readButton, 
         this.removeButton
       );
-
-    this.setTitle(title);
-    this.setAuthor(author);
-    this.setPages(pages);
-    this.setRead(read);
+    
+    this.refreshAll();
   }
 
-  set title (title) { this.setTitle(title); }
-  set author (author) { this.setAuthor(author); }
-  set pages (pages) { this.setPages(pages); }
-  set read (read) { this.setRead(read); }
-
-  setTitle(title) {
-    this.title = title;
-    this.titleElement.textContent = title;
+  refreshTitle() {
+    this.titleElement.textContent = this.book.title;
   }
 
-  setAuthor(author) {
-    this.author = author;
-    this.authorElement.textContent = author;
+  refreshAuthor() {
+    this.authorElement.textContent = this.book.author;
   }
 
-  setPages(pages) {
-    this.pages = pages;
-    this.pagesElement.textContent = pages;
+  refreshPages() {
+    this.pagesElement.textContent = this.book.pages;
   }
 
-  setRead(read) {
-    this.read = read;
+  refreshRead() {
+    const read = this.book.read;
     this.readButton.textContent = (read) ? "Read" : "Not read";
     
     const classList = this.readButton.classList;
@@ -123,5 +135,12 @@ export default class BookCard extends Component {
     } else {
       classList.remove("read");
     }
+  }
+
+  refreshAll() {
+    this.refreshTitle();
+    this.refreshAuthor();
+    this.refreshPages();
+    this.refreshRead();
   }
 }
