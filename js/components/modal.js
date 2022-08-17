@@ -1,6 +1,7 @@
 import Component from "../components/component.js";
 
 export default class Modal extends Component {
+  modal;
 
   constructor() {
     super (
@@ -32,15 +33,16 @@ export default class Modal extends Component {
       `
     );
     
+    this.modal = this.shadowRoot.querySelector('.modal');
     // Hide the modal when not clicking on content.
-    this.parent.addEventListener("click", (e) => {
-      if (e.target === this.parent) {
+    this.modal.addEventListener("click", (e) => {
+      if (e.target === this.modal) {
         this.toggle(false);
       }
     });
   }
 
   toggle (active) {
-    this.parent.style.display = (active) ? "flex" : "";
+    this.modal.style.display = (active) ? "flex" : "";
   }
 }

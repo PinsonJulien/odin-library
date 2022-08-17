@@ -29,10 +29,4 @@ export default class Component extends HTMLElement {
   // Consts
   set style (styleElement) { return; }
   set templateElement (templateElement) { return; }
-
-  // Methods
-
-  get parent () {
-    return this.shadowRoot.firstElementChild;
-  }
 }

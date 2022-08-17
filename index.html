@@ -13,6 +13,7 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     
     <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/globals.css">
     <link rel="stylesheet" href="css/main.css">
     
     <script defer type="module" src="js/main.js"></script>
@@ -20,14 +21,16 @@
 
   <body>
     <div class="container">
-      <header>
-        <h1>Odin - Library</h1>
+      <header id="top-bar">
+        <p>Odin - Library</p>
       </header>
 
       <main>
-        <button-component id="add-button">
-          + ADD
-        </button-component>
+        <div id="buttons">
+          <button-component id="add-button">
+             + New book
+          </button-component>
+        </div>
 
         <div id="books">
 
@@ -36,7 +39,7 @@
     </div>
 
 
-    <modal-component id="modal">
+    <modal-component id="modal" style="background-color: red;">
       <div>
         <p>
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsam tempore, consectetur veritatis consequuntur eius perspiciatis qui molestias similique culpa cumque fugiat fugit, nulla enim repellendus! Facilis impedit ullam ut et ab accusantium nam inventore deleniti quaerat magnam error, rem voluptas provident assumenda culpa. Nemo nihil voluptas temporibus sequi exercitationem soluta.
