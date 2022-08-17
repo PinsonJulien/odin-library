@@ -15,6 +15,7 @@ export default class Modal extends Component {
           width: 100vw;
           height: 100vh;
           overflow: auto;
+          backdrop-filter: contrast(40%);
         }
 
         .modal-content {

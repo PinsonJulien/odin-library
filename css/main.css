@@ -86,3 +86,54 @@ button-component#add-button::part(button) {
 button-component#add-button::part(button):hover {
   background-color: var(--neutral-300)
 }
+
+#new-book-form {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(6, 1fr);
+  padding: 2em;
+  background-color: var(--neutral-100);
+  border-radius: 15px;
+  gap: 1em;
+  font-size: 1em;
+  font-weight: 300;
+}
+
+#new-book-form > * {
+  width: 100%;
+  margin: auto;
+}
+
+#new-book-form > div:not(:nth-of-type(4)) {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+}
+
+#new-book-form > div:nth-of-type(4) {
+  text-align: center;
+}
+
+#new-book-form input {
+  border-radius: 10px;
+  padding: 0.5em 1em 0.5em 1em;
+}
+
+#new-book-form > p {
+  font-size: 1.8em;
+  text-align: center;
+  font-weight: 500;
+}
+
+#new-book-form button {
+  border-radius: 15px;
+  padding: 1em 0 1em 0;
+  font-size: inherit;
+  background-color: var(--green-300);
+  border: none;
+  cursor: pointer;
+}
+
+#new-book-form button:hover {
+  background-color: var(--green-400);
+} 

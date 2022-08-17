@@ -20,3 +20,25 @@ books.append(
   new BookCard("1984", "George Orwell", 376, true),
   new BookCard("Industrial Society and Its Future", "Theodore John Kaczynski", 162, false)
 );
+
+const newBookForm = document.getElementById("new-book-form");
+newBookForm.addEventListener("submit", (e) => {
+  const form = e.target;
+  const getInputValue = (name) => {
+    return form[name].value;
+  }
+
+  // Get each values from the form and create a new book from it.
+  const title = getInputValue("title");
+  const author = getInputValue("author");
+  const pages = getInputValue("pages");
+  const read = getInputValue("read");
+
+  books.append(
+    new BookCard(title, author, pages, read)
+  );
+  
+  // Hide the modal and reset the form.
+  modal.toggle(false);
+  form.reset();
+});

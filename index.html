@@ -40,12 +40,38 @@
 
 
     <modal-component id="modal" style="background-color: red;">
-      <div>
+      <form 
+        id="new-book-form" 
+        name="new-book-form" 
+        method="post" 
+        action="#"
+        onsubmit="return false;"
+      >
         <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsam tempore, consectetur veritatis consequuntur eius perspiciatis qui molestias similique culpa cumque fugiat fugit, nulla enim repellendus! Facilis impedit ullam ut et ab accusantium nam inventore deleniti quaerat magnam error, rem voluptas provident assumenda culpa. Nemo nihil voluptas temporibus sequi exercitationem soluta.
+          Add new book
         </p>
-      </div>
+        <div>
+          <label for="title">Title</label>
+          <input type="text" name="title" id="title">
+        </div>
+        <div>
+          <label for="author">Author</label>
+          <input type="text" name="author" id="author">
+        </div>
+        <div>
+          <label for="pages">Pages</label>
+          <input type="number" name="pages" id="pages">
+        </div>
+        <div>
+          <label for="read">Did you read it ?</label>
+          <input type="checkbox" name="read" id="read">
+        </div>
 
+        <button type="submit">
+          Submit
+        </button>
+
+      </form>
     </modal-component>
   </body>
 </html>
