@@ -18,7 +18,14 @@ addButton.onClick = (() => {
 
 const books = document.getElementById("books");
 
-//addNewBookCard(new Book("1984", "George Orwell", 376, true));
+const bookList = new Set();
+bookList.add(new Book("1984", "George Orwell", 376, true))
+bookList.add(new Book("1984", "George Orwell", 150, true))
+
+// Generate all the books;
+bookList.forEach((book, id) => {
+  addNewBookCard(book);
+});
 
 const newBookForm = document.getElementById("new-book-form");
 newBookForm.addEventListener("submit", (e) => {
@@ -33,7 +40,13 @@ newBookForm.addEventListener("submit", (e) => {
   const pages = getInputValue("pages");
   const read = getInputValue("read");
 
-  addNewBookCard(new Book(title, author, pages, read));
+  const book = new Book(title, author, pages, read);
+  
+  // Add in html  
+  addNewBookCard(book);
+  
+  // Add in set
+  bookList.add(book);
   
   // Hide the modal and reset the form.
   modal.toggle(false);
@@ -44,8 +57,15 @@ function addNewBookCard (book) {
   const bookCard = new BookCard(book);
 
   bookCard.addEventListener('removed', (e) => {
-    books.removeChild(e.target);
-  })
+    const card = e.target;
+    const book = Object.getPrototypeOf(card.book);
+
+    // Removes from html
+    books.removeChild(card);
+
+    // Removes from set
+    bookList.delete(book);
+  });
 
   books.append(bookCard);
 }

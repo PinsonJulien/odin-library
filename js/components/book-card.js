@@ -90,6 +90,10 @@ export default class BookCard extends Component {
         }
 
         return true;
+      },
+      // Return the original target.
+      getPrototypeOf(target) {
+        return target;
       }
     });
 
