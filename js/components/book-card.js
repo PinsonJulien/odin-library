@@ -105,6 +105,7 @@ export default class BookCard extends Component {
     this.readButton.setAttribute('id', 'read-button')
     this.readButton.onClick = () => {
       this.book.read = !this.book.read;
+      this.dispatchEvent(new Event('updated'));
     }
 
     this.removeButton = new Button();

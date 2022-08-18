@@ -3,10 +3,15 @@ The 8th [project](https://www.theodinproject.com/lessons/node-path-javascript-li
 
 See the result [here](https://pinsonjulien.github.io/odin-library/)
 
+I learned to use:
+- Set
+- Shadow DOM components
+- LocalStorage
+- Proxy
+
 ## Known issues
 Currently none
 
 ## Possible improvements
 - Using google books API to do an autosearch when the user types.
-- Cloud storage.
-- Local storage when not in cloud mode.
+- switch for Cloud storage.

@@ -18,12 +18,10 @@ addButton.onClick = (() => {
 
 const books = document.getElementById("books");
 
-const bookList = new Set();
-bookList.add(new Book("1984", "George Orwell", 376, true))
-bookList.add(new Book("1984", "George Orwell", 150, true))
+// Read all locally stored books and generate their cards.
+const bookSet = getLocalStorageBookSet();
 
-// Generate all the books;
-bookList.forEach((book, id) => {
+bookSet.forEach((book, id) => {
   addNewBookCard(book);
 });
 
@@ -46,7 +44,10 @@ newBookForm.addEventListener("submit", (e) => {
   addNewBookCard(book);
   
   // Add in set
-  bookList.add(book);
+  bookSet.add(book);
+
+  // Save locally
+  setLocalStorageBookSet();
   
   // Hide the modal and reset the form.
   modal.toggle(false);
@@ -64,8 +65,43 @@ function addNewBookCard (book) {
     books.removeChild(card);
 
     // Removes from set
-    bookList.delete(book);
+    bookSet.delete(book);
+
+    // Save locally
+    setLocalStorageBookSet();
+  });
+
+  bookCard.addEventListener('updated', (e) => {
+    // Save locally
+    setLocalStorageBookSet();
   });
 
   books.append(bookCard);
+}
+
+function getLocalStorageData(key) {
+  return window.localStorage.getItem(key);
+}
+
+function setLocalStorageData(key, value) {
+  window.localStorage.setItem(key, value);
+}
+
+function getLocalStorageBookSet() {
+  const str = getLocalStorageData('books');
+  return convertStringToSet(str);
+}
+
+function setLocalStorageBookSet() {
+  setLocalStorageData('books', convertSetToString(bookSet));
+}
+
+function convertSetToString(set) {
+  const array = [...set];
+  return JSON.stringify(array); 
+}
+
+function convertStringToSet(string) {
+  const array = JSON.parse(string);
+  return new Set(array);
 }
