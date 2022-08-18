@@ -18,8 +18,7 @@ addButton.onClick = (() => {
 
 const books = document.getElementById("books");
 
-addNewBookCard(new Book("1984", "George Orwell", 376, true));
-addNewBookCard(new Book("Industrial Society and Its Future", "Theodore John Kaczynski", 162, false))
+//addNewBookCard(new Book("1984", "George Orwell", 376, true));
 
 const newBookForm = document.getElementById("new-book-form");
 newBookForm.addEventListener("submit", (e) => {

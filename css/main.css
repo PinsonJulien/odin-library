@@ -12,6 +12,10 @@ a {
   cursor: pointer; 
 }
 
+button {
+  font-family: inherit;
+}
+
 /* Grids */
 
 body > .container {
@@ -70,7 +74,6 @@ main {
 #books {
   grid-area: books;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr;
   gap: 2em;
 }
@@ -137,3 +140,45 @@ button-component#add-button::part(button):hover {
 #new-book-form button:hover {
   background-color: var(--green-400);
 } 
+
+/* Responsive books grid */
+/* XS */
+@media only screen and (min-width:  0px) and (max-width: 640px) {
+  #books {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
+
+/* SM */
+@media only screen and (min-width:  640px) and (max-width: 768px) {
+  #books {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* MD */
+@media only screen and (min-width:  768px) and (max-width: 1024px) {
+  #books {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* LG */
+@media only screen and (min-width:  1024px) and (max-width: 1280px) {
+  #books {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* XL */
+@media only screen and (min-width:  1280px) and (max-width: 1536px) {
+  #books {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+/* 2XL */
+@media only screen and (min-width:  1536px) {
+  #books {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

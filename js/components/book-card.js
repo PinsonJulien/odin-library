@@ -28,6 +28,12 @@ export default class BookCard extends Component {
           box-shadow: 3px 3px 0px var(--neutral-300);
         }
 
+        p {
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+        }
+
         #read-button {
           background-color: var(--red-300);
         }
@@ -38,7 +44,7 @@ export default class BookCard extends Component {
 
         button-component {
           border-radius: 15px;
-          background-color: var(--neutral-200)
+          background-color: var(--neutral-200);
         }
 
         button-component.read {

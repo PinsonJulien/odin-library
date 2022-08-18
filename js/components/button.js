@@ -15,6 +15,8 @@ export default class Button extends Component {
           border-radius: inherit;
           color: inherit;
           font-size: inherit;
+          font-weight: inherit;
+          font-family: inherit;
         }
       `,
       /*html*/`
