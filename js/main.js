@@ -107,9 +107,6 @@ function addNewBookCard (book) {
   bookCard.addEventListener('updated', (e) => {
     // Save locally
     setLocalStorageBookList();
-
-    // Refresh local space
-    updateAvailableStorageSpace();
   });
 
   books.appendChild(bookCard);
