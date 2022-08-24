@@ -131,7 +131,7 @@ button-component#add-button::part(button):hover {
   padding: 0.5em 1em 0.5em 1em;
 }
 
-#new-book-form > p {
+#new-book-form > p:first-child {
   font-size: 1.8em;
   text-align: center;
   font-weight: 500;
@@ -149,6 +149,14 @@ button-component#add-button::part(button):hover {
 #new-book-form button:hover {
   background-color: var(--green-400);
 } 
+
+#new-book-form-error {
+  text-align: center;
+  color: var(--red-400);
+  font-size: 1.3em !important;
+  font-weight: 500 !important;
+}
+
 
 /* Responsive books grid */
 /* XS */

@@ -29,6 +29,7 @@ bookSet.forEach((book, id) => {
 // Refresh local space
 updateAvailableStorageSpace();
 
+const newBookFormError = document.getElementById("new-book-form-error");
 const newBookForm = document.getElementById("new-book-form");
 newBookForm.addEventListener("submit", (e) => {
   const form = e.target;
@@ -43,10 +44,16 @@ newBookForm.addEventListener("submit", (e) => {
   const read = getInputValue("read");
 
   const book = new Book(title, author, pages, read);
-  
+
+  // If the new book is too big for the storage, shows an error message.
+  if (byteSize(JSON.stringify(book)) >= getRemainingLocalStorageSpace()) {
+    newBookFormError.textContent =  "There's not enough space available.";
+    return;
+  }
+
   // Add in html  
   addNewBookCard(book);
-  
+
   // Add in set
   bookSet.add(book);
 
@@ -59,6 +66,7 @@ newBookForm.addEventListener("submit", (e) => {
   // Hide the modal and reset the form.
   modal.toggle(false);
   form.reset();
+  newBookFormError.textContent = "";
 });
 
 function addNewBookCard (book) {
