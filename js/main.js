@@ -10,6 +10,7 @@ customElements.define('button-component', Button);
 customElements.define('book-card', BookCard);
 
 const modal = document.getElementById("modal");
+const availableStorageSpan = document.getElementById("local-space");
 
 const addButton = document.getElementById("add-button");
 addButton.onClick = (() => {
@@ -24,6 +25,9 @@ const bookSet = getLocalStorageBookSet();
 bookSet.forEach((book, id) => {
   addNewBookCard(book);
 });
+
+// Refresh local space
+updateAvailableStorageSpace();
 
 const newBookForm = document.getElementById("new-book-form");
 newBookForm.addEventListener("submit", (e) => {
@@ -48,6 +52,9 @@ newBookForm.addEventListener("submit", (e) => {
 
   // Save locally
   setLocalStorageBookSet();
+
+  // Refresh local space
+  updateAvailableStorageSpace();
   
   // Hide the modal and reset the form.
   modal.toggle(false);
@@ -69,11 +76,17 @@ function addNewBookCard (book) {
 
     // Save locally
     setLocalStorageBookSet();
+
+    // Refresh local space
+    updateAvailableStorageSpace();
   });
 
   bookCard.addEventListener('updated', (e) => {
     // Save locally
     setLocalStorageBookSet();
+
+    // Refresh local space
+    updateAvailableStorageSpace();
   });
 
   books.append(bookCard);
@@ -104,4 +117,39 @@ function convertSetToString(set) {
 function convertStringToSet(string) {
   const array = JSON.parse(string);
   return new Set(array);
+}
+
+function updateAvailableStorageSpace() {
+  const remainingSpace = getRemainingLocalStorageSpace();
+
+  let value;
+  let unit;
+
+  if (remainingSpace > 100000) {
+    value = Number(remainingSpace / 1000000).toFixed(2);
+    unit = "mb";
+  }
+
+  else if (remainingSpace > 10000) {
+    value = Number(remainingSpace / 1000).toFixed(2);
+    unit = "kb";
+  }
+
+  else {
+    value = remainingSpace;
+    unit = "b";
+  }
+
+  availableStorageSpan.textContent = `${value} ${unit}`;
+}
+
+function byteSize(str) {
+  return new Blob([str]).size
+}
+
+function getRemainingLocalStorageSpace() {
+  // 5mb
+  const storageLimit = 5000000;
+
+  return storageLimit - byteSize(JSON.stringify(window.localStorage));
 }
