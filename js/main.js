@@ -20,9 +20,9 @@ addButton.onClick = (() => {
 const books = document.getElementById("books");
 
 // Read all locally stored books and generate their cards.
-const bookSet = getLocalStorageBookSet();
+const bookList = getLocalStorageBookList();
 
-bookSet.forEach((book, id) => {
+bookList.forEach((book) => {
   addNewBookCard(book);
 });
 
@@ -54,11 +54,11 @@ newBookForm.addEventListener("submit", (e) => {
   // Add in html  
   addNewBookCard(book);
 
-  // Add in set
-  bookSet.add(book);
+  // Add in list
+  bookList.push(book);
 
   // Save locally
-  setLocalStorageBookSet();
+  setLocalStorageBookList();
 
   // Refresh local space
   updateAvailableStorageSpace();
@@ -79,11 +79,12 @@ function addNewBookCard (book) {
     // Removes from html
     books.removeChild(card);
 
-    // Removes from set
-    bookSet.delete(book);
+    // Removes from list
+    const bookId = bookList.findIndex((e) => e = book);
+    bookList.splice(bookId, 1);
 
     // Save locally
-    setLocalStorageBookSet();
+    setLocalStorageBookList();
 
     // Refresh local space
     updateAvailableStorageSpace();
@@ -91,7 +92,7 @@ function addNewBookCard (book) {
 
   bookCard.addEventListener('updated', (e) => {
     // Save locally
-    setLocalStorageBookSet();
+    setLocalStorageBookList();
 
     // Refresh local space
     updateAvailableStorageSpace();
@@ -108,23 +109,21 @@ function setLocalStorageData(key, value) {
   window.localStorage.setItem(key, value);
 }
 
-function getLocalStorageBookSet() {
+function getLocalStorageBookList() {
   const str = getLocalStorageData('books');
-  return convertStringToSet(str);
+  return convertStringToArray(str);
 }
 
-function setLocalStorageBookSet() {
-  setLocalStorageData('books', convertSetToString(bookSet));
+function setLocalStorageBookList() {
+  setLocalStorageData('books', convertArrayToString(bookList));
 }
 
-function convertSetToString(set) {
-  const array = [...set];
+function convertArrayToString(array) {
   return JSON.stringify(array); 
 }
 
-function convertStringToSet(string) {
-  const array = JSON.parse(string);
-  return new Set(array);
+function convertStringToArray(string) {
+  return JSON.parse(string);
 }
 
 function updateAvailableStorageSpace() {
@@ -152,7 +151,7 @@ function updateAvailableStorageSpace() {
 }
 
 function byteSize(str) {
-  return new Blob([str]).size
+  return new Blob([str]).size;
 }
 
 function getRemainingLocalStorageSpace() {
