@@ -18,6 +18,8 @@ addButton.onClick = (() => {
 });
 
 const books = document.getElementById("books");
+// Empty the element (text issue.)
+books.replaceChildren();
 
 // Read all locally stored books and generate their cards.
 const bookList = getLocalStorageBookList();
@@ -54,9 +56,22 @@ newBookForm.addEventListener("submit", (e) => {
   // Add in html  
   addNewBookCard(book);
 
-  // Add in list
+  // Add and sort in list
   bookList.push(book);
+  sortBookList();
 
+  // Place the element properly if it's not the last.
+  // This allows to avoid sorting the whole array of DOM elements.
+  const id = getBookId(book);
+  if (books.childNodes.length - 1 != id ) {
+    // Get the element on supposed new element position
+    const afterElement = books.childNodes[id];
+    // Get last element added (the new one)
+    const beforeElement = books.childNodes[books.childNodes.length - 1];
+
+    afterElement.before(beforeElement);
+  }
+  
   // Save locally
   setLocalStorageBookList();
 
@@ -80,8 +95,7 @@ function addNewBookCard (book) {
     books.removeChild(card);
 
     // Removes from list
-    const bookId = bookList.findIndex((e) => e = book);
-    bookList.splice(bookId, 1);
+    bookList.splice(getBookId(book), 1);
 
     // Save locally
     setLocalStorageBookList();
@@ -98,7 +112,17 @@ function addNewBookCard (book) {
     updateAvailableStorageSpace();
   });
 
-  books.append(bookCard);
+  books.appendChild(bookCard);
+}
+
+function getBookId(book) {
+  return bookList.findIndex((e) => e === book);
+}
+
+function sortBookList() {
+  bookList.sort((a, b) => {
+    return a.title.localeCompare(b.title); 
+  });
 }
 
 function getLocalStorageData(key) {
