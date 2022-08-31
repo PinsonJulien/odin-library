@@ -123,7 +123,8 @@ function sortBookList() {
 }
 
 function getLocalStorageData(key) {
-  return window.localStorage.getItem(key);
+  const data =  window.localStorage.getItem(key);
+  return data;
 }
 
 function setLocalStorageData(key, value) {
@@ -132,7 +133,9 @@ function setLocalStorageData(key, value) {
 
 function getLocalStorageBookList() {
   const str = getLocalStorageData('books');
-  return convertStringToArray(str);
+  if (str) return convertStringToArray(str);
+
+  return [];
 }
 
 function setLocalStorageBookList() {
